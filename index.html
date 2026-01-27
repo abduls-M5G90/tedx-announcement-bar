@@ -1,9 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body {
+html, body {
   margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.banner-wrapper {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
 }
 
 .announcement {
@@ -14,26 +27,57 @@ body {
   padding: 10px 0;
   white-space: nowrap;
   overflow: hidden;
+  width: 100%;
 }
 
 .scroll-text {
   display: inline-block;
   padding-left: 100%;
-  animation: scroll 15s linear infinite;
+  animation: scroll 18s linear infinite;
 }
 
 @keyframes scroll {
   from { transform: translateX(0); }
-  to { transform: translateX(-100%); }
+  to   { transform: translateX(-100%); }
+}
+
+.timer {
+  margin-left: 30px;
+  font-weight: bold;
 }
 </style>
 </head>
 
 <body>
-  <div class="announcement">
-    <div class="scroll-text">
-      🎤 TEDx IT 2026 | Theme Reveal Soon | Registrations Opening Shortly
+  <div class="banner-wrapper">
+    <div class="announcement">
+      <div class="scroll-text">
+        🎤 TEDx IT 2026 | Good Shepherd International School | Event begins in
+        <span class="timer" id="countdown"></span>
+      </div>
     </div>
   </div>
+
+<script>
+const eventDate = new Date("March 28, 2026 00:00:00").getTime();
+
+setInterval(function () {
+  const now = new Date().getTime();
+  const distance = eventDate - now;
+
+  if (distance < 0) {
+    document.getElementById("countdown").innerHTML = "Today 🎉";
+    return;
+  }
+
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+  document.getElementById("countdown").innerHTML =
+    days + "d " + hours + "h " + minutes + "m";
+}, 1000);
+</script>
+
 </body>
 </html>
