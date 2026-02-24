@@ -46,14 +46,18 @@ html, body {
   font-weight: bold;
 }
 
-/* ===== PREMIUM MOBILE VERSION ===== */
+/* ===== MOBILE FIX (CLIPPING + CLEAN LAYOUT) ===== */
 @media (max-width: 600px) {
+
+  body {
+    overflow: visible !important;
+  }
 
   .announcement {
     white-space: normal;
     text-align: center;
     font-size: 14px;
-    padding: 8px 10px;
+    padding: 10px 10px;
   }
 
   .scroll-text {
@@ -74,7 +78,7 @@ html, body {
   <div class="banner-wrapper">
     <div class="announcement">
       <div class="scroll-text">
-        🎤 TEDx 2026 | Event begins in
+        🎤 TEDx IT 2026 | Theme Reveal Soon | Event begins in
         <span class="timer" id="countdown"></span>
       </div>
     </div>
