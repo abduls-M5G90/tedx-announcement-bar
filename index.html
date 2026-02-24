@@ -5,46 +5,49 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <style>
-body {
+html, body {
   margin: 0;
+  padding: 0;
   overflow: hidden;
+  background: transparent;
 }
 
-/* 🔴 MAIN BANNER */
+/* 🔴 Banner container */
 .announcement {
   background: #E62B1E;
   color: white;
   font-family: Arial, sans-serif;
-  font-size: 16px;
-  height: 40px;
-  display: flex;
-  align-items: center;   /* Vertical centering FIX */
-  overflow: hidden;
-  white-space: nowrap;
+  height: 42px;
   width: 100%;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Scrolling text */
+/* 🧠 Hard vertical centering (WORKS IN GOOGLE SITES) */
 .scroll-text {
-  display: inline-block;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
   padding-left: 100%;
   animation: scroll-left 15s linear infinite;
+  font-size: 16px;
 }
 
+/* Smooth scroll */
 @keyframes scroll-left {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-100%); }
+  0% { transform: translate(0%, -50%); }
+  100% { transform: translate(-100%, -50%); }
 }
 
-/* 📱 MOBILE OPTIMIZATION */
+/* 📱 Mobile fix */
 @media (max-width: 600px) {
   .announcement {
-    font-size: 14px;
-    height: 36px;
+    height: 38px;
   }
-
   .scroll-text {
-    animation-duration: 12s; /* Slightly faster on phone */
+    font-size: 14px;
+    animation-duration: 12s;
   }
 }
 </style>
@@ -54,28 +57,26 @@ body {
 
 <div class="announcement">
   <div class="scroll-text">
-    🎤 TEDx Event Coming Soon — March 28, 2026 | 
+    🎤 TEDx Event Coming Soon — March 28, 2026 |
     ⏳ <span id="countdown"></span>
   </div>
 </div>
 
 <script>
-// Countdown Timer to March 28, 2026
 const eventDate = new Date("March 28, 2026 00:00:00").getTime();
 
-const timer = setInterval(() => {
+setInterval(() => {
   const now = new Date().getTime();
   const gap = eventDate - now;
 
-  const days = Math.floor(gap / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((gap / (1000 * 60 * 60)) % 24);
-  const minutes = Math.floor((gap / (1000 * 60)) % 60);
+  const d = Math.floor(gap / (1000*60*60*24));
+  const h = Math.floor((gap / (1000*60*60)) % 24);
+  const m = Math.floor((gap / (1000*60)) % 60);
 
   document.getElementById("countdown").innerHTML =
-    days + "d " + hours + "h " + minutes + "m left";
+    d + "d " + h + "h " + m + "m left";
 
   if (gap < 0) {
-    clearInterval(timer);
     document.getElementById("countdown").innerHTML = "We're LIVE 🎉";
   }
 }, 1000);
