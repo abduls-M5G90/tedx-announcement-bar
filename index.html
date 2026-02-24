@@ -1,107 +1,83 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 <style>
-html, body {
+body {
   margin: 0;
-  padding: 0;
-  width: 100%;
   overflow: hidden;
 }
 
-.banner-wrapper {
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-}
-
+/* 🔴 MAIN BANNER */
 .announcement {
   background: #E62B1E;
   color: white;
   font-family: Arial, sans-serif;
   font-size: 16px;
-  padding: 10px 0;
-  white-space: nowrap;
+  height: 40px;
+  display: flex;
+  align-items: center;   /* Vertical centering FIX */
   overflow: hidden;
+  white-space: nowrap;
   width: 100%;
 }
 
+/* Scrolling text */
 .scroll-text {
   display: inline-block;
   padding-left: 100%;
-  animation: scroll 18s linear infinite;
+  animation: scroll-left 15s linear infinite;
 }
 
-@keyframes scroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-100%); }
+@keyframes scroll-left {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-100%); }
 }
 
-.timer {
-  margin-left: 30px;
-  font-weight: bold;
-}
-
-/* ===== MOBILE FIX (CLIPPING + CLEAN LAYOUT) ===== */
+/* 📱 MOBILE OPTIMIZATION */
 @media (max-width: 600px) {
-
-  body {
-    overflow: visible !important;
-  }
-
   .announcement {
-    white-space: normal;
-    text-align: center;
     font-size: 14px;
-    padding: 10px 10px;
+    height: 36px;
   }
 
   .scroll-text {
-    animation: none;
-    padding-left: 0;
-  }
-
-  .timer {
-    display: block;
-    margin-top: 4px;
-    font-size: 15px;
+    animation-duration: 12s; /* Slightly faster on phone */
   }
 }
 </style>
 </head>
 
 <body>
-  <div class="banner-wrapper">
-    <div class="announcement">
-      <div class="scroll-text">
-        🎤 TEDx IT 2026 | Theme Reveal Soon | Event begins in
-        <span class="timer" id="countdown"></span>
-      </div>
-    </div>
+
+<div class="announcement">
+  <div class="scroll-text">
+    🎤 TEDx Event Coming Soon — March 28, 2026 | 
+    ⏳ <span id="countdown"></span>
   </div>
+</div>
 
 <script>
+// Countdown Timer to March 28, 2026
 const eventDate = new Date("March 28, 2026 00:00:00").getTime();
 
-setInterval(function () {
+const timer = setInterval(() => {
   const now = new Date().getTime();
-  const distance = eventDate - now;
+  const gap = eventDate - now;
 
-  if (distance < 0) {
-    document.getElementById("countdown").innerHTML = "Today 🎉";
-    return;
-  }
-
-  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  const days = Math.floor(gap / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((gap / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((gap / (1000 * 60)) % 60);
 
   document.getElementById("countdown").innerHTML =
-    days + "d " + hours + "h " + minutes + "m";
+    days + "d " + hours + "h " + minutes + "m left";
+
+  if (gap < 0) {
+    clearInterval(timer);
+    document.getElementById("countdown").innerHTML = "We're LIVE 🎉";
+  }
 }, 1000);
 </script>
 
