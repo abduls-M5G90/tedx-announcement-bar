@@ -45,6 +45,28 @@ html, body {
   margin-left: 30px;
   font-weight: bold;
 }
+
+/* ===== PREMIUM MOBILE VERSION ===== */
+@media (max-width: 600px) {
+
+  .announcement {
+    white-space: normal;
+    text-align: center;
+    font-size: 14px;
+    padding: 8px 10px;
+  }
+
+  .scroll-text {
+    animation: none;
+    padding-left: 0;
+  }
+
+  .timer {
+    display: block;
+    margin-top: 4px;
+    font-size: 15px;
+  }
+}
 </style>
 </head>
 
@@ -52,7 +74,7 @@ html, body {
   <div class="banner-wrapper">
     <div class="announcement">
       <div class="scroll-text">
-        🎤 TEDx 2026 | Good Shepherd International School | Event begins in
+        🎤 TEDx 2026 | Event begins in
         <span class="timer" id="countdown"></span>
       </div>
     </div>
