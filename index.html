@@ -22,7 +22,7 @@ html, body {
   white-space: nowrap;
 }
 
-/* ✅ Vertical centering using line-height */
+/* ✅ Text styling */
 .scroll-text {
   display: inline-block;
   line-height: 44px;
@@ -31,13 +31,24 @@ html, body {
   font-size: 16px;
 }
 
-/* Scroll animation */
+/* 🔁 Scroll animation */
 @keyframes scroll-left {
   0% { transform: translateX(0); }
   100% { transform: translateX(-100%); }
 }
 
-/* 📱 Mobile */
+/* 🔥 Flash effect */
+.flash {
+  animation: flashAnim 1s infinite;
+}
+
+@keyframes flashAnim {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.2; }
+  100% { opacity: 1; }
+}
+
+/* 📱 Mobile fix */
 @media (max-width: 600px) {
   .announcement {
     height: 40px;
@@ -55,30 +66,49 @@ html, body {
 
 <div class="announcement">
   <div class="scroll-text">
-    🎤 TEDx Event Coming Soon — March 28, 2026 |
+    🎤 <span id="title">TEDx Event Coming Soon</span> — March 28, 2026 |
     ⏳ <span id="countdown"></span>
   </div>
 </div>
 
 <script>
-// ✅ Correct time: March 28, 2026 at 9:00 AM
-const eventDate = new Date("2026-03-28T09:00:00+05:30").getTime();
+// 🎯 Event start (9 AM IST)
+const eventStart = new Date("2026-03-28T09:00:00+05:30").getTime();
+
+// 🎯 Event end (midnight IST)
+const eventEnd = new Date("2026-03-29T00:00:00+05:30").getTime();
 
 setInterval(() => {
   const now = new Date().getTime();
-  const gap = eventDate - now;
 
-  if (gap < 0) {
-    document.getElementById("countdown").innerHTML = "We're LIVE 🎉";
-    return;
+  const countdown = document.getElementById("countdown");
+  const title = document.getElementById("title");
+
+  // ⏳ BEFORE EVENT
+  if (now < eventStart) {
+    const gap = eventStart - now;
+
+    const d = Math.floor(gap / (1000*60*60*24));
+    const h = Math.floor((gap / (1000*60*60)) % 24);
+    const m = Math.floor((gap / (1000*60)) % 60);
+
+    countdown.innerHTML = d + "d " + h + "h " + m + "m left";
   }
 
-  const d = Math.floor(gap / (1000*60*60*24));
-  const h = Math.floor((gap / (1000*60*60)) % 24);
-  const m = Math.floor((gap / (1000*60)) % 60);
+  // 🔥 DURING EVENT (9 AM → 12 AM)
+  else if (now >= eventStart && now < eventEnd) {
+    countdown.innerHTML = "We’re LIVE 🎉";
+    countdown.classList.add("flash");
 
-  document.getElementById("countdown").innerHTML =
-    d + "d " + h + "h " + m + "m left";
+    // 🌊 Title reveal
+    title.innerHTML = "The Ripple Effects ";
+  }
+
+  // 🌙 AFTER EVENT
+  else {
+    countdown.innerHTML = "Event Ended";
+    countdown.classList.remove("flash");
+  }
 
 }, 1000);
 </script>
