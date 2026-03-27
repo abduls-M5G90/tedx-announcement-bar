@@ -62,7 +62,7 @@ html, body {
 
 <script>
 // ✅ Correct time: March 28, 2026 at 9:00 AM
-const eventDate = new Date(2026, 2, 28, 9, 0, 0).getTime();
+const eventDate = new Date("2026-03-28T09:00:00+05:30").getTime();
 
 setInterval(() => {
   const now = new Date().getTime();
