@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <style>
@@ -12,40 +11,39 @@ html, body {
   background: transparent;
 }
 
-/* 🔴 Banner container */
+/* 🔴 Banner */
 .announcement {
   background: #E62B1E;
   color: white;
   font-family: Arial, sans-serif;
-  height: 42px;
+  height: 44px;
   width: 100%;
-  position: relative;
   overflow: hidden;
+  white-space: nowrap;
 }
 
-/* 🧠 Hard vertical centering (WORKS IN GOOGLE SITES) */
+/* ✅ Vertical centering using line-height */
 .scroll-text {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  white-space: nowrap;
+  display: inline-block;
+  line-height: 44px;
   padding-left: 100%;
   animation: scroll-left 15s linear infinite;
   font-size: 16px;
 }
 
-/* Smooth scroll */
+/* Scroll animation */
 @keyframes scroll-left {
-  0% { transform: translate(0%, -50%); }
-  100% { transform: translate(-100%, -50%); }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
 }
 
-/* 📱 Mobile fix */
+/* 📱 Mobile */
 @media (max-width: 600px) {
   .announcement {
-    height: 38px;
+    height: 40px;
   }
   .scroll-text {
+    line-height: 40px;
     font-size: 14px;
     animation-duration: 12s;
   }
@@ -63,11 +61,17 @@ html, body {
 </div>
 
 <script>
-const eventDate = new Date("March 28, 2026 00:00:00").getTime();
+// ✅ Correct time: March 28, 2026 at 9:00 AM
+const eventDate = new Date(2026, 2, 28, 9, 0, 0).getTime();
 
 setInterval(() => {
   const now = new Date().getTime();
   const gap = eventDate - now;
+
+  if (gap < 0) {
+    document.getElementById("countdown").innerHTML = "We're LIVE 🎉";
+    return;
+  }
 
   const d = Math.floor(gap / (1000*60*60*24));
   const h = Math.floor((gap / (1000*60*60)) % 24);
@@ -76,9 +80,6 @@ setInterval(() => {
   document.getElementById("countdown").innerHTML =
     d + "d " + h + "h " + m + "m left";
 
-  if (gap < 0) {
-    document.getElementById("countdown").innerHTML = "We're LIVE 🎉";
-  }
 }, 1000);
 </script>
 
